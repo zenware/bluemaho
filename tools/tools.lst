@@ -1,0 +1,46 @@
+# tools list file for BlueMaho
+#
+# line format:
+#                  name <tab> command line ; description
+# where:
+# @hci@ = local hci device
+# @bt_addr@ = bluetooth address of remote device
+# @hci_num@ = number of local hci device, e.g. 0,1,2..N
+#
+# atshell.c by Bastian Ballmann (modified attest.c by Marcel Holtmann)
+atshell	./tools/atshell @bt_addr@ <channel> @hci_num@ ; atshell - rfcomm shell for AT commands. mostly used to communicate with DialUp Networking services. different devices accepts different manufacturer specific AT commands, but there are common (GSM specifications) for all, see handbook.
+#
+bluetracker	python ./tools/bluetracker.py @hci@ @bt_addr@ 0.2 ; script for tracking link quality and rssi (recieved signal strength) for specified remote bluetooth enabled device. ideal link quality value is 255 and rssi is 0.
+#
+# BSS (Bluetooth Stack Smasher) v0.8 by Pierre Betouin. L2CAP layer fuzzer
+bss (l2cap layer fuzzer)	./tools/bss -i @hci@ -M 0 -m 0 -o -x @bt_addr@ ; L2CAP layer fuzzer, it can be used to find l2cap packets causing DoS on remote device. tool can perform 12 tests and fuzzing with random data. in BlueMaho it is set to perform all tests by default. for more information please see tool's help.
+#
+# btftp v0.1 by Marcel Holtmann
+btftp	./tools/btftp -i @hci@ @bt_addr@ ; tool for transfering files over Bluetooth OBEX FTP. it browses remote sdp-server for number of obex ftp service channel automatically, but you can also manually specify it, see tools help. \navailablecommands: [ls, cd, mkdir, get, put, del, exit].
+#
+# carwhisperer v0.2 by Martin Herfurt. patched
+carwhisperer	./tools/carwhisperer @hci_num@ message.raw in.raw @bt_addr@ <channel> ; carwhisperer intends to exploit bt-devices without display and keyboard (mostly car kits and headsets) for the possible security threat evolving from  the use of standard PIN codes. carwhisperer connects to device (on RFCOMM channel 1) and opens a control connection and connects the SCO links. once the connection has been successfully established, the carwhisperer  starts sending audio to, and recording audio from the headset. this allows attackers to inject audio data into the car. see tools help for more info and usage. see handbook for list of devices and their PIN codes.
+#
+# private plugin for pushing some file to remote device
+my_push_file	./tools/ussp-push --dev @hci_num@ @bt_addr@@<opush_chan> ./tools/ed__s.gif edo.gif ; private plugin for pushing some file to remote device
+#
+# l2cap packet generator by Bastian Ballmann
+l2cap packet generator	./tools/l2cap-packet -a @bt_addr@ -c <l2cap_code> ; tool for generating and sending l2cap packets.\nl2cap_code values: L2CAP_COMMAND_REJ(1), L2CAP_CONN_REQ(2),L2CAP_CONN_RSP(3), L2CAP_CONF_REQ(4), L2CAP_CONF_RSP(5), L2CAP_DISCONN_REQ(6),L2CAP_DISCONN_RSP(7),L2CAP_ECHO_REQ(8), L2CAP_ECHO_RSP(9), L2CAP_INFO_REQ(10), L2CAP_INFO_RSP(11)\noptional parameters: -i <l2cap_ident> -p <payload> -s <headersize>
+#
+# l2ping (from BlueZ) by Max Krasnyansky. Sends a L2CAP echo requests and reaplys
+l2ping	l2ping -i @hci@ @bt_addr@ ; send L2CAP echo request and recieve answer.\n   available options: -s <packet_size> -c <packet_count> -t <timeout>\n                                 -r (send echo reaply) -f (flood ping)
+#
+# OBEX stress v0.1 ^_^
+obex stress tests	python ./tools/obexstress.py @bt_addr@ <channel> ; script for testing remote OBEX service for some potential vulnerabilities. tests available commands on remote device, may find directory transversing, tests if some characters in file name can cause a DoS, tests if long file name can cause a DoS. note, that you can't specify local hci device for script to use, so it will use first available.
+#
+# psm_scan v0.4 from bt_audit-0.1.1 by Collin R. Mulliner
+psm_scan	./tools/psm_scan -i @hci_num@ -c -s <from> -e <to> @bt_addr@ ; find open L2CAP PSM(Protocol Service Multiplexers) by scanning certain range. you can find common PSM values in handbook.
+#
+# rfcomm_scan v0.1.1 from bt_audit-0.1.1 by Collin R. Mulliner. Find open RFCOMM channels by scanning certain range
+rfcomm_scan	./tools/rfcomm_scan -i @hci_num@ -d -s 1 -e 30 @bt_addr@ ; find open RFCOMM channels by scanning certain range.
+#
+# sdptool (from Bluez). sdp discovery
+sdptool browse	sdptool browse @bt_addr@ ; performs SDP browse for remote services
+#
+# ussp-push v0.10 by Davide Libenzi. OBEX object pusher
+ussp-push	./tools/ussp-push --dev @hci_num@ @bt_addr@@<channel number> <local filename> <remote filename> ; tool for pushing files to OBEX Push/FTP service

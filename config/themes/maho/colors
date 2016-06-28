@@ -1,0 +1,7 @@
+bgcolor = #cccccc
+fgcolor = #0000ff
+bgcolor_displ = #ddddee
+fontsize = 8
+fontsize_dev = 7
+fontsize_log = 7
+fontsize_hb = 8

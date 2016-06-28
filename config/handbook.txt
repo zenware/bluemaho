@@ -1,0 +1,176 @@
+### TITLE = Common AT Commands from the GSM specifications
+The following lists the AT control commands that
+a device is expected to support, however, a device
+may support more commands than listed.
+
+# General Commands
+ AT+CGMI - Identify manufacturer
+ AT+CGMM - Identify model
+ AT+CGMR - Identify revision
+ AT+CGSN - Identify serial number (of device, not SIM)
+ AT+CSCS - Select character set
+
+# Call Control Commands
+ ATDnnn; - Dial "nnn" in voice mode.
+ ATH - Hangup the current call.
+ ATA - Answer an incoming call.
+
+# Network Services Related Commands
+ AT+CNUM - Subscriber number
+ AT+CREG - Network registration
+ AT+COPS - Operator selection
+ AT+CLCK - Facility lock
+ AT+CPWD - Change password
+ AT+CLIP - Enable caller line identification
+ AT+CLIR - Caller ID restriction
+ AT+CCUG - Closed user group
+ AT+CCFC - Call forwarding number and conditions
+ AT+CCWA - Call waiting
+ AT+CHLD - Call hold and multiparty
+ AT+CTFR - Call transfer
+ AT+CAOC - Advice of charge
+
+# Mobile Equipment Control and Status Commands
+ AT+CPAS - Phone activity status
+ AT+CFUN - Set phone functionality
+ AT+CPIN - Enter PIN
+ AT+CBC - Battery charge
+ AT+CSQ - Signal quality
+ AT+CPBS - Select phone book memory storage
+ AT+CPBR - Read phone book entries
+ AT+CPBW - Write phone book entries
+
+# SMS Commands
+ AT+CPMS - Preferred message storage
+ AT+CMGF - Message format (we use format 0: PDU)
+ AT+CSCA - Service centre address
+ AT+CNMI - Enable new message indications
+ AT+CSCB - Select cell broadcast message types
+ AT+CMGL - List messages
+ AT+CMGR - Read message
+ AT+CMGS - Send message
+ AT+CMGD - Delete message
+ AT+CMMS - More messages to send
+ +CMTI - Notification of SMS message delivery.
+ +CBMI - Notification of a cell broadcast message.
+ +CDSI - Notification of an SMS status report message.
+ +CBM - Notification of a directly delivered cell
+	    broadcast message.
+
+# Other Commands
+ AT+VTS - DTMF and tone generation
+ AT+CVIB - Select vibrate mode
+ AT+CPUC - Price per unit
+ AT+CIMI - SIM identity
+ AT+CLCC	List active calls
+
+# Also look at this:
+ Comparison chart of AT+C commands of GSM devices
+ http://gatling.ikk.sztaki.hu/~kissg/gsm/at+c.html
+
+### END ###
+
+### TITLE = Assigned Protocol and Service Multiplexor values (PSM)
+0x0001 	Bluetooth Service Discovery Protocol (SDP)
+0x0003 	RFCOMM with TS 07.10
+0x0005 	Bluetooth Telephony Control Specification
+0x0007	Bluetooth Telephony Control Specification
+0x000F 	Bluetooth Network Encapsulation Protocol
+0x0011 	Human Interface Device Control
+0x0013 	Human Interface Device Interrupt
+0x0015 	[ESDP] UPnP
+0x0017 	Audio/Video Control Transport Protocol
+0x0019 	Audio/Video Distribution Transport Protocol
+0x001D 	Unrestricted Digital Information Profile [UDI]
+
+### END ###
+
+### TITLE = Static Bluetooth PIN codes
+Static Bluetooth PIN codes
+
+SECURITY meanings:
+ "I" - device must be in "pairing mode" to
+       be discoverable.
+ "S" - device must be in "pairing mode" to pair,
+	otherwise if you know its BD_ADDR and PIN
+	you may pair for free.
+
+DEVICE                         PIN     TYPE        SECURITY
+Anycom Stereo Headset 0000  Headset    I
+Audi UHV *                    1234  Car Kit      ?
+Jabra BT110                  0000  Headset    I,S
+Jabra BT800                  0000  Headset    I,S
+Jabra BT2040                0000  Headset    I,S
+Plantronics M2500         0000  Headset     I
+Plantronics Expl 220      0000  Headset     ?
+Motorola H670              0000  Headset     ?
+Motorola HS820            0000  Headset     I,S
+
+### END ###
+
+### TITLE = Where and how bluetooth stacks storing linkkeys?
+BlueZ (2.x, 3.x)
+/var/lib/bluetooth/%bdaddr%/linkkeys
+Unencrypted.
+The linkkeys file format is:
+   %remoteaddr% %128 bit link key% %key type%.
+00:04:3E:65:A1:C8 AA0F3125267C236E10B145F1DF5BA7D7 2
+
+IVT BlueSoleil (5.x, 6.02270)
+%WINDIR%/system32/REMOTEDEVICE.INI
+Unencrypted.
+[11:22:33:44:55:66]
+relation=0000
+link_key=4DAC6F9E0C6700A5E9C44BF7529EF23C
+dev_class=0U+00D70050020C
+name=Joe
+
+Mac OS X 10.x
+/private/var/root/Library/Preferences/blued.plist
+Unencrypted.
+
+Widcomm (6.0.1.5300)
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys
+Unencrypted.
+
+Widcomm on Windows Mobile 203 PDAs
+HKLM\Software\WIDCOMM\BtConfig\Devices\BD_ADDR\LinkKey
+Unencrypted.
+
+### END ###
+
+### TITLE = Known vulnareble products
+Common vulnerabilities:
+   attacking HID host implementations
+   l2ping flood DoS
+   Mode3 abuse
+   obex push abuse DoS (prompts flood)
+
+AmbiCom Blue Neighbors <= v2.5: OPUSH filename DoS
+BlueZ hcidump v1.29: DoS
+HP iPAQ: OPUSH malformed file name DoS
+IVT BluSoleil Bluetooth Stack 1.4: Directory Traversal
+Motorola S55: l2ping flood DoS
+Motorola V5xx, V6xx, E398: Helomoto
+Motorola V600: BlueBug
+Motorola V80: BlueBug, Helomoto
+Nokia 3210: OPUSH malformed file name DoS
+Nokia 6310: BlueSnarf
+Nokia 6310i: BlueBug, BlueSnarf
+Nokia 6600, 7650: l2ping flood DoS
+Nokia 7610: OPUSH filename DoS, l2ping flood DoS
+Nokia 8910, 8910i: BlueSnarf
+Nokia 9550: vCard DoS
+Nokia N70: l2cap packet DoS, OPUSH filename DoS
+Nokia N73: OPUSH malformed file name DoS
+Siemens V55: l2ping flood DoS
+Sony-Ericsson K600i, V600i, K750i, W800i: reset display
+Sony-Ericsson T610: BlueBug, BlueSnarf
+Sony-Ericsson P900: OPUSH malformed file name DoS
+Sony-Ericsson R520m, T68i, Z1010, Z600: BlueSnarf
+Toshiba Stack Win32 <=4.0.23: l2cap 'Ping of Death' DoS
+Toshiba Bluetooth Stack <= 4.0.23 Directory Traversal
+Widcomm BT Stack <= 1.4.2: BluePIMp
+Widcomm BT Stack < 3.01.905: Directory Traversal
+
+### END ###

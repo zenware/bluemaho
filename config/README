@@ -1,0 +1,81 @@
+# What is it?
+
+BlueMaho is GUI-shell (interface) for suite of tools for testing security of bluetooth devices. It is freeware, opensource, written on python, uses wxPyhon. It can be used for testing BT-devices for known vulnerabilities and major thing to do - testing to find unknown vulns. Also it can form nice statistics.
+
+# What it can do? (features)
+
+    * scan for devices, show advanced info, SDP records, vendor etc
+    * track devices - show where and how much times device was seen, its name changes
+    * loop scan - it can scan all time, showing you online devices
+    * alerts with sound if new device found
+    * on_new_device - you can spacify what command should it run when it founds new device
+    * it can use separate dongles - one for scaning (loop scan) and one for running tools or exploits
+    * send files
+    * change name, class, mode, BD_ADDR of local HCI devices
+    * save results in database
+    * form nice statistics (uniq devices by day/hour, vendors, services etc)
+    * test remote device for known vulnerabilities (see exploits for more details)
+    * test remote device for unknown vulnerabilities (see tools for more details)
+    * themes! you can customize it 
+
+# What tools and exploits it consist of?
+
+  + tools:
+    * atshell.c by Bastian Ballmann (modified attest.c by Marcel Holtmann)
+    * bccmd by Marcel Holtmann
+    * bdaddr.c by Marcel Holtmann
+    * bluetracker.py by ^_^
+    * carwhisperer v0.2 by Martin Herfurt
+    * psm_scan and rfcomm_scan from bt_audit-0.1.1 by Collin R. Mulliner
+    * BSS (Bluetooth Stack Smasher) v0.8 by Pierre Betouin
+    * btftp v0.1 by Marcel Holtmann
+    * btobex v0.1 by Marcel Holtmann
+    * L2CAP packetgenerator by Bastian Ballmann
+    * redfang v2.50 by Ollie Whitehouse
+    * obex stress tests 0.1 by ^_^
+    * ussp-push v0.10 by Davide Libenzi
+    
+  + exploits/attacks: 
+    * Bluebugger v0.1 by Martin J. Muench
+    * bluePIMp by Kevin Finisterre
+    * BlueZ hcidump v1.29 DoS PoC by Pierre Betouin
+    * helomoto by Adam Laurie
+    * hidattack v0.1 by Collin R. Mulliner
+    * Mode 3 abuse attack
+    * Nokia N70 l2cap packet DoS PoC Pierre Betouin
+    * opush abuse (prompts flood) DoS attack
+    * Sony-Ericsson reset display PoC by Pierre Betouin 
+
+you can add your own tools by editing 'exploits/exploits.lst' and 'tools/tools.lst'
+
+# Requirements
+
+    * OS (tested with Debian 4.0 Etch / 2.6.18)
+    * python (python 2.4 http://www.python.org)
+    * wxPython (python-wxgtk2.6 http://www.wxpython.org)
+    * BlueZ (3.9/3.24) http://www.bluez.org
+    * Eterm to open tools somewhere, you can set another term in 'config/defaul.conf' changing the value of 'cmd_term' variable. (tested with 1.1 ver)
+    * pkg-config(0.21), 'tee' used in tools/showmaxlocaldevinfo.sh, openobex, obexftp
+    * libopenobex1 + libopenobex-dev (needed by ussp-push)
+    * libxml2, libxml2-dev (needed by btftp)
+    * libusb-dev (needed by bccmd)
+    * libreadline5-dev (needed by atshell.c)
+    * lightblue-0.3.3 (needed by obexstress.py)
+    * hardware: any bluez compatible bluetooth-device 
+
+# Configuration
+
+   1. all configuration is in 'config' dir.
+   2. for using bluemaho propertly you need to build tools and exploits. check if you satisfy 'requirements' for bluemaho. then run 'build.sh'. if you see 'Building complete!' message, than all went OK. if not - try to play around requirements.
+   3. 'default.conf' is a default configuration file, you can edit it if you need to change some options, path to files and commands used by bluemaho, theme etc. by default you don't need to change it if you do all from 'requirements' chapter. but, please, view it, for example just for setting 'user_location' variable for defining you location, which will be used for tracking function.
+   4. 'themes' - directory with themes for bluemaho GUI. You can set path to default theme with 'theme' variable in 'default.conf' 
+
+# Run and use
+
+    * you can run BlueMaho typing in console 'bluemaho.py'. For verbose output in console (and redirecting std_err and std_out) run 'bluemaho.py -v'. it saves founded devices to 'bluemaho.log' by default, you can change it in 'config/defaul.conf'. 
+
+enjoy!
+
+http://wiki.thc.org/BlueMaho
+
+^_^

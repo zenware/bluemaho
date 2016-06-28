@@ -1,0 +1,19 @@
+[2009-04-17] RELEASE v090417
+NEW: statistics (uniq devices by day/hour, vendors, services etc)
+NEW: handbook
+NEW: opush abuse (prompts flood) DoS attack
+NEW: OBEX stress tests
+NEW: DoS in OPUSH filename for Nokia 7610, 3210, N70, N73
+NEW: Mode 3 abuse attack: get pairing by using social engineering
+NEW: shows times device was found in defined place
+NEW: shows if different names were used by same bd_addr
+NEW: shows PSM and RFCOMM channels in SDP vrowse info
+NEW: added carwhisperer 0.2
+NEW: using 'lightblue' package for OBEX some operations
+FIX: some code improvements for more usability and stability
+CHG: rewrited bluetracker.py for more stability
+CHG: fontsize can be changed in config
+CHG: add specifying of local hci device to atshell.c, psm_scan.c, rfcomm_scan.c (added timeout, scans more accuracy)
+CHG: oui.txt is now used original format
+CHG: greenplague removed
+[2008-04-22] RELEASE: v080422 beta
